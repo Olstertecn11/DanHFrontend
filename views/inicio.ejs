@@ -1,61 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movistar - Megaprint</title>
-    <!-- Referencias a los archivos estáticos -->
-    <script src="/Js/index.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-    <link rel="stylesheet" href="/styles/styleindex.css">
-    <link rel="stylesheet" href="styleinicio.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Mooli&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Kantumruy+Pro:wght@600&family=Mooli&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movistar - Megaprint</title>
+  <!-- Referencias a los archivos estáticos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  <link rel="stylesheet" href="/styles/styleindex.css">
+  <link rel="stylesheet" href="styleinicio.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Mooli&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Kantumruy+Pro:wght@600&family=Mooli&display=swap"
+    rel="stylesheet">
+  <link rel="icon"
+    href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png">
 </head>
+
 <body>
-    <div id="nav-bar">
-        <input id="nav-toggle" type="checkbox"/>
-        <div id="nav-header"><a id="nav-title" target="_blank"><img src="/img/Movistar New.svg" alt="Image" class="megalogo"></i>MOVISTAR - COLOMBIA</a>
-          <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
-          <hr/>
-        </div>
-        <div id="nav-content">
-          <div class="nav-button" type="button" onclick="mostrarOpcion('inicio')"><i class="fas fa-home"></i><span>Inicio</span></div>
-          <div class="nav-button" type="button" onclick="mostrarOpcion('dashboard')"><i class="fas fa-chart-line"></i><span>Dashboard</span></div>
-          <div class="nav-button" type="button" onclick="mostrarOpcion('registros')"><i class="fas fa-table"></i><span>Registros</span></div>
-          <hr/>
-          <hr/>
-          <div class="nav-button" type="button" onclick="mostrarOpcion('usuarios')"><i class="fas fa-users"></i><span>Usuarios</span></div>
-          <div class="nav-button" type="button" onclick="confirmarCerrarSesion()"><i class="fas fa-door-closed"></i><span>Cerrar Sesión</span></div>
-          <div id="nav-content-highlight"></div>
-        </div>
-        <input id="nav-footer-toggle" type="checkbox"/>
-        <div id="nav-footer">
-          <div id="nav-footer-heading">
-            <div id="nav-footer-avatar"><img src="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png"/></div>
-            <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank">Powerby:Daniel Hernandez®</a><span id="nav-footer-subtitle">Admin</span></div>
-            <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
-          </div>
-          <div id="nav-footer-content">
-            <p>El usuario tiene acceso a todas las funciones del portal web</p>
-            <p>Megaprint® 2024</p>
-          </div>
-        </div>
+  <div id="nav-bar">
+    <input id="nav-toggle" type="checkbox" />
+    <div id="nav-header"><a id="nav-title" target="_blank"><img src="/img/Movistar New.svg" alt="Image"
+          class="megalogo"></i>MOVISTAR - COLOMBIA</a>
+      <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+      <hr />
     </div>
-    <div class="content-box-Large">
-        <h1>Bienvenido al Portal IVR Visual IVR Movistar Colombia</h1><br/>
-        <p class="parrafo">Encontrarás una amplia gama de módulos cuidadosamente diseñados para satisfacer tus necesidades de administración de accesos de usuarios y consulta de información relevante en nuestro dashboard. Ya sea que estés buscando gestionar tus accesos o simplemente deseas estar al tanto de los datos más recientes en nuestro dashboard, estás en el lugar indicado. Nuestro objetivo es brindarte una plataforma intuitiva y amigable que te permita acceder a la información que necesitas de manera rápida y sencilla, para que puedas tomar decisiones informadas y aprovechar al máximo nuestros servicios.</p> 
-        <h4>¡Explora nuestros módulos y descubre todo lo que el portal IVR de Movistar Colombia tiene para ofrecerte!<br/></h4>
+    <div id="nav-content">
+      <div class="nav-button" type="button" onclick="mostrarOpcion('inicio')"><i
+          class="fas fa-home"></i><span>Inicio</span></div>
+      <div class="nav-button" type="button" onclick="mostrarOpcion('dashboard')"><i
+          class="fas fa-chart-line"></i><span>Dashboard</span></div>
+      <div class="nav-button" type="button" onclick="mostrarOpcion('registros')"><i
+          class="fas fa-table"></i><span>Registros</span></div>
+      <hr />
+      <hr />
+      <div class="nav-button" type="button" onclick="mostrarOpcion('usuarios')"><i
+          class="fas fa-users"></i><span>Usuarios</span></div>
+      <div class="nav-button" type="button" onclick="confirmarCerrarSesion()"><i
+          class="fas fa-door-closed"></i><span>Cerrar Sesión</span></div>
+      <div id="nav-content-highlight"></div>
     </div>
-    <script src="/Js/index.js"></script> <!-- Asegúrate de que la ruta esté bien configurada -->
+    <input id="nav-footer-toggle" type="checkbox" />
+    <div id="nav-footer">
+      <div id="nav-footer-heading">
+        <div id="nav-footer-avatar"><img
+            src="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png" />
+        </div>
+        <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank">Powerby:Daniel
+            Hernandez®</a><span id="nav-footer-subtitle">Admin</span></div>
+        <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+      </div>
+      <div id="nav-footer-content">
+        <p>El usuario tiene acceso a todas las funciones del portal web</p>
+        <p>Megaprint® 2024</p>
+      </div>
+    </div>
+  </div>
+  <div class="content-box-Large">
+    <h1>Bienvenido al Portal IVR Visual IVR Movistar Colombia</h1><br />
+    <p class="parrafo">Encontrarás una amplia gama de módulos cuidadosamente diseñados para satisfacer tus necesidades
+      de administración de accesos de usuarios y consulta de información relevante en nuestro dashboard. Ya sea que
+      estés buscando gestionar tus accesos o simplemente deseas estar al tanto de los datos más recientes en nuestro
+      dashboard, estás en el lugar indicado. Nuestro objetivo es brindarte una plataforma intuitiva y amigable que te
+      permita acceder a la información que necesitas de manera rápida y sencilla, para que puedas tomar decisiones
+      informadas y aprovechar al máximo nuestros servicios.</p>
+    <h4>¡Explora nuestros módulos y descubre todo lo que el portal IVR de Movistar Colombia tiene para ofrecerte!<br />
+    </h4>
+  </div>
+
+  <script src="/index.js"></script>
 </body>
+
 </html>

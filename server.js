@@ -1,10 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const authroutes = require('./routes/auth'); // Ruta ajustada para conectar con el backend
-//const cors = require('cors'); // Para habilitar CORS
+const cookieParser = require('cookie-parser'); // ✅ Importar primero
+const verificarAutenticacion = require('./middlewares/verificarAutenticacion');
+require('dotenv').config();
 
 const app = express();
+
+// 🧠 Orden IMPORTANTE
+app.use(cookieParser()); // ✅ Esto DEBE ir antes de usar `req.cookies`
 
 // Configuración de EJS para renderizado de plantillas
 app.set('view engine', 'ejs');
@@ -14,35 +18,27 @@ app.use(express.static('Js'));
 
 // Middleware para analizar el cuerpo de la solicitud
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json()); // Para analizar JSON si usas APIs JSON
+app.use(bodyParser.json());
 
-// Habilitar CORS
-/*app.use(cors({
-    origin: 'http://localhost:3000', // Cambia esto según el puerto de tu frontend
-    credentials: true
-}));*/
-
-// Configuración de sesión
+// (si decides usar sesiones además del JWT)
+app.use(session({
+  secret: 'mi_secreto',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
 
 // Rutas
-
-
-// Redirigir URL raíz a la página de inicio de sesión
 app.get('/', (req, res) => {
-    res.render('login');
+  res.render('login');
 });
 
-app.get('/inicio', (req, res) => {
-    res.render('inicio');  // Renderiza 'inicio.ejs' cuando se accede a la ruta '/inicio'
+app.get('/inicio', verificarAutenticacion, (req, res) => {
+  res.render('inicio', { nombre: req.usuario });
 });
-
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`✅ Frontend corriendo en http://localhost:${PORT}`);
 });
-
-
-
-
