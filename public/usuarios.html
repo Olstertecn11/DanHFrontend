@@ -1,98 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Movistar - Megaprint</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'>
-  <link rel="stylesheet" href="/public/styles/styleindex.css">
-  <link rel="stylesheet" href="/styles/styleindex.css">
-  <link rel="stylesheet" href="styleinicio.css">
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
-    rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&display=swap" rel="stylesheet">
+
+  <!-- Íconos y tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Mooli&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Kantumruy+Pro:wght@600&family=Mooli&display=swap"
-    rel="stylesheet">
-  <link rel="icon"
-    href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png">
-  <link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet" />
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- DataTables CSS -->
+  <!-- DataTables -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
 
-  <!-- jQuery (requerido por DataTables) -->
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- DataTables JS -->
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <!-- Tabulator (si lo estás usando en otra parte del sistema) -->
+  <link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet" />
 
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="/styles/styleindex.css" />
+  <link rel="stylesheet" href="/styleinicio.css" />
 
+  <!-- Ícono -->
+  <link rel="icon"
+    href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png" />
+
+  <!-- Estilos extra -->
   <style>
     .btn-action {
       width: 40%;
       background-color: #80808057;
       font-size: 12px;
     }
+
+    .modal-backdrop {
+      z-index: -1;
+    }
   </style>
+
+  <!-- JS principales (jQuery necesario para DataTables) -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 
-<body>
+
+<body class="d-flex">
+  <!-- Sidebar -->
   <div id="nav-bar">
     <input id="nav-toggle" type="checkbox" />
-    <div id="nav-header"><a id="nav-title" target="_blank"><img src="/img/Movistar New.svg" alt="Image"
-          class="megalogo"></i>MOVISTAR - COLOMBIA</a>
+    <div id="nav-header">
+      <a id="nav-title" target="_blank">
+        <img src="/img/Movistar New.svg" alt="Image" class="megalogo" />
+        MOVISTAR - COLOMBIA
+      </a>
       <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
       <hr />
     </div>
     <div id="nav-content">
-      <div class="nav-button" type="button" onclick="mostrarOpcion('inicio')"><i
-          class="fas fa-home"></i><span>Inicio</span></div>
-      <div class="nav-button" type="button" onclick="mostrarOpcion('dashboard')"><i
-          class="fas fa-chart-line"></i><span>Dashboard</span></div>
-      <div class="nav-button" type="button" onclick="mostrarOpcion('registros')"><i
-          class="fas fa-table"></i><span>Registros</span></div>
+      <div class="nav-button" onclick="mostrarOpcion('inicio')"><i class="fas fa-home"></i> Inicio</div>
+      <div class="nav-button" onclick="mostrarOpcion('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</div>
+      <div class="nav-button" onclick="mostrarOpcion('registros')"><i class="fas fa-table"></i> Registros</div>
       <hr />
-      <hr />
-      <div class="nav-button" type="button" onclick="mostrarOpcion('usuarios')"><i
-          class="fas fa-users"></i><span>Usuarios</span></div>
-      <div class="nav-button" type="button" onclick="confirmarCerrarSesion()"><i
-          class="fas fa-door-closed"></i><span>Cerrar Sesión</span></div>
+      <div class="nav-button" onclick="mostrarOpcion('usuarios')"><i class="fas fa-users"></i> Usuarios</div>
+      <div class="nav-button" onclick="confirmarCerrarSesion()"><i class="fas fa-door-closed"></i> Cerrar Sesión</div>
       <div id="nav-content-highlight"></div>
     </div>
     <input id="nav-footer-toggle" type="checkbox" />
     <div id="nav-footer">
       <div id="nav-footer-heading">
-        <div id="nav-footer-avatar"><img
+        <div id="nav-footer-avatar">
+          <img
             src="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png" />
         </div>
-        <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank">Powerby:Megaprint®</a><span
-            id="nav-footer-subtitle">Admin</span></div>
+        <div id="nav-footer-titlebox">
+          <a id="nav-footer-title" href="#">Powerby: Megaprint®</a>
+          <span id="nav-footer-subtitle">Admin</span>
+        </div>
         <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
       </div>
       <div id="nav-footer-content">
-        <Lorem>El usuario tiene acceso a todas las funciones del portal web</Lorem>
-        <Lorem>Megaprint® 2024</Lorem>
+        <p>El usuario tiene acceso a todas las funciones del portal web</p>
+        <p>Megaprint® 2024</p>
       </div>
     </div>
   </div>
-  <div class="content-box-Large">
-    <h1>Usuarios</h1><br />
-    <p>En el siguiente apartado puede seleccionar visualizar el registro de usuarios:<br /></p>
 
-    <table id="tablaUsuarios" class="display" style="width:100%">
+  <!-- Main Content -->
+  <div class="content-box-Large container-fluid py-4">
+    <h1 class="mb-3">Usuarios</h1>
+    <p>En el siguiente apartado puede seleccionar visualizar el registro de usuarios:</p>
+
+    <!-- Botón crear -->
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalCrearUsuario">
+      Crear nuevo usuario
+    </button>
+
+    <!-- Tabla usuarios -->
+    <table id="tablaUsuarios" class="display table table-bordered" style="width:100%">
       <thead>
         <tr>
           <th>ID</th>
@@ -106,11 +120,66 @@
       </thead>
       <tbody></tbody>
     </table>
-    <div id="tabla" class="data-tabla"></div>
+
+    <!-- Modal: Crear Usuario -->
+    <div class="modal fade" id="modalCrearUsuario" tabindex="-1" aria-labelledby="crearUsuarioLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="formCrearUsuario">
+            <div class="modal-header">
+              <h5 class="modal-title">Crear Usuario</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <input type="text" name="Nombre" placeholder="Nombre" class="form-control mb-2" required />
+              <input type="email" name="correo" placeholder="Correo" class="form-control mb-2" required />
+              <input type="password" name="contrasena" placeholder="Contraseña" class="form-control mb-2" required />
+              <select name="id_rol" class="form-control mb-2">
+                <option value="1">Admin</option>
+                <option value="2">Operador</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Guardar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Editar Usuario -->
+    <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="editarUsuarioLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="formEditarUsuario">
+            <div class="modal-header">
+              <h5 class="modal-title">Editar Usuario</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="_id" />
+              <input type="text" name="Nombre" placeholder="Nombre" class="form-control mb-2" required />
+              <input type="email" name="correo" placeholder="Correo" class="form-control mb-2" required />
+              <select name="id_rol" class="form-control mb-2">
+                <option value="1">Admin</option>
+                <option value="2">Operador</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Actualizar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  </div>
+
+  <!-- Scripts al final -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/index.js"></script>
-  <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
   <script src="/usuarios.js"></script>
 </body>
 

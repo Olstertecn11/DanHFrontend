@@ -58,3 +58,62 @@ $(document).ready(function() {
     }
   });
 });
+
+
+// Crear usuario
+$("#formCrearUsuario").on("submit", function(e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(this).entries());
+
+  fetch("http://localhost:3000/api/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  })
+    .then(res => res.json())
+    .then(res => {
+      $('#modalCrearUsuario').modal('hide');
+      Swal.fire("¡Éxito!", "Usuario creado correctamente", "success");
+      $('#tablaUsuarios').DataTable().ajax.reload(); // si usas ajax
+    })
+    .catch(err => {
+      console.error(err);
+      Swal.fire("Error", "No se pudo crear el usuario", "error");
+    });
+});
+
+// Editar usuario
+window.editarUsuario = function(id) {
+  fetch(`http://localhost:3000/api/user/${id}`)
+    .then(res => res.json())
+    .then(user => {
+      const form = document.querySelector("#formEditarUsuario");
+      form._id.value = user._id;
+      form.Nombre.value = user.Nombre;
+      form.correo.value = user.correo;
+      form.id_rol.value = user.id_rol;
+      $('#modalEditarUsuario').modal('show');
+    });
+};
+
+$("#formEditarUsuario").on("submit", function(e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(this).entries());
+  const id = data._id;
+
+  fetch(`http://localhost:3000/api/user/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  })
+    .then(res => res.json())
+    .then(res => {
+      $('#modalEditarUsuario').modal('hide');
+      Swal.fire("Actualizado", "Usuario modificado correctamente", "success");
+      $('#tablaUsuarios').DataTable().ajax.reload(); // si usas ajax
+    })
+    .catch(err => {
+      console.error(err);
+      Swal.fire("Error", "No se pudo actualizar el usuario", "error");
+    });
+});
