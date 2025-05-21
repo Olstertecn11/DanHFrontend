@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movistar - Megaprint</title>
-  <script src="/Js/index.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
@@ -29,6 +28,25 @@
   <link rel="icon"
     href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png">
   <link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet" />
+
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+
+  <!-- jQuery (requerido por DataTables) -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+  <style>
+    .btn-action {
+      width: 40%;
+      background-color: #80808057;
+      font-size: 12px;
+    }
+  </style>
 </head>
 
 <body>
@@ -73,12 +91,27 @@
   <div class="content-box-Large">
     <h1>Usuarios</h1><br />
     <p>En el siguiente apartado puede seleccionar visualizar el registro de usuarios:<br /></p>
+
+    <table id="tablaUsuarios" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Rol</th>
+          <th>Fecha de creación</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
     <div id="tabla" class="data-tabla"></div>
   </div>
   </div>
-  <script src="/Js/usuarios.js"></script>
   <script src="/index.js"></script>
   <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+  <script src="/usuarios.js"></script>
 </body>
 
 </html>

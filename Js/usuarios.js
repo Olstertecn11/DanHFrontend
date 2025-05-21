@@ -1,29 +1,60 @@
-document.addEventListener("DOMContentLoaded", (event)=>{ 
-    function initializeTable() {
-      table = new Tabulator("#tabla", {
-        layout: "fitData",
-        columns: [],
-        pagination: "local",
-        paginationSize: 25,
-        paginationSizeSelector: [10, 25, 50, 100],
-        ajaxURL:
-          "http://localhost:3000/api/perfiles",
-        ajaxContentType: "json",
-        ajaxResponse: function (url, params, response) {
-          console.log(response);
-          var columns = [];
-          var headers = response.length > 0 ? Object.keys(response[0]) : [];
-          headers.forEach((header) => {
-            columns.push({ title: header, field: header, headerFilter: "input" });
-          });
-          table.setColumns(columns);
-          return response;
-        },
+$(document).ready(function() {
+  $.ajax({
+    url: "http://localhost:3000/api/user",
+    method: "GET",
+    xhrFields: {
+      withCredentials: true
+    },
+    success: function(data) {
+      $('#tablaUsuarios').DataTable({
+        data: data,
+        columns: [
+          { data: "_id" },
+          { data: "Nombre" },
+          { data: "correo" },
+          {
+            data: "id_rol",
+            render: function(data) {
+              return data === 1 ? "Admin" : data === 2 ? "Operador" : "Desconocido";
+            }
+          },
+          {
+            data: "fecha_creacion",
+            render: function(data) {
+              const fecha = new Date(data);
+              return fecha.toLocaleDateString("es-ES");
+            }
+          },
+          {
+            data: "estado",
+            render: function(data) {
+              return data === 1 ? "Activo" : "Inactivo";
+            }
+          },
+          {
+            data: null,
+            orderable: false,
+            searchable: false,
+            render: function(data) {
+              return `
+                <button class="btn btn-action" onclick="editarUsuario('${data._id}')">📝</button>
+                <button class="btn btn-action" onclick="eliminarUsuario('${data._id}')">❌</button>
+              `;
+            }
+          }
+        ],
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+        }
       });
-  
-      table.setData();
+    },
+    error: function(err) {
+      console.error("Error al obtener usuarios:", err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudieron cargar los usuarios.'
+      });
     }
-    
-    initializeTable()
-
-  })
+  });
+});
