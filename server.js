@@ -11,10 +11,10 @@ const app = express();
 app.use(cookieParser()); // ✅ Esto DEBE ir antes de usar `req.cookies`
 
 // Configuración de EJS para renderizado de plantillas
-app.set('view engine', 'ejs');
-app.set('views', './views');
 app.use(express.static('public'));
 app.use(express.static('Js'));
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 // Middleware para analizar el cuerpo de la solicitud
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,6 +36,21 @@ app.get('/', (req, res) => {
 app.get('/inicio', verificarAutenticacion, (req, res) => {
   res.render('inicio', { nombre: req.usuario });
 });
+
+
+app.get('/registros', verificarAutenticacion, (req, res) => {
+  res.sendFile(__dirname + '/public/registros.html');
+});
+
+
+app.get('/home', verificarAutenticacion, (req, res) => {
+  res.render('index');
+});
+
+
+
+
+
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3001;

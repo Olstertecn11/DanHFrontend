@@ -53,12 +53,12 @@ function mostrarOpcion(opcion) {
   }
   if (opcion === 'inicio') {
     setTimeout(() => {
-      window.location.href = "/public/inicio.html";
+      window.location.href = "/home";
     }, 100);
   }
   if (opcion === 'registros') {
     setTimeout(() => {
-      window.location.href = "/public/registros.html";
+      window.location.href = "/registros";
     }, 200);
   }
   if (opcion === 'usuarios') {

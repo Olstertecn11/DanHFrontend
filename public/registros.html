@@ -1,72 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movistar - Megaprint</title>
-    <script src="/Js/index.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'>
-    <link rel="stylesheet" href="/public/styles/styleindex.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Mooli&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Kantumruy+Pro:wght@600&family=Mooli&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png">
-    <link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
-  </head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movistar - Megaprint</title>
+  <script src="/Js/index.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'>
+  <link rel="stylesheet" href="/public/styles/styleindex.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Mooli&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Kantumruy+Pro:wght@600&family=Mooli&display=swap"
+    rel="stylesheet">
+  <link rel="icon"
+    href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png">
+  <link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+  <link rel="stylesheet" href="/styles/styleindex.css">
+  <link rel="stylesheet" href="styleinicio.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+</head>
+
 <body>
-    <div id="nav-bar">
-        <input id="nav-toggle" type="checkbox"/>
-        <div id="nav-header"><a id="nav-title" target="_blank"><img src="/public/img/Movistar New.svg" alt="Image" class="megalogo"></i>MOVISTAR - COLOMBIA</a>
-          <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
-          <hr/>
-        </div>
-        <div id="nav-content">
-          <div class="nav-button" type="button" onclick="mostrarOpcion('inicio')"><i class="fas fa-home"></i><span>Inicio</span></div>
-          <div class="nav-button" type="button" onclick="mostrarOpcion('dashboard')"><i class="fas fa-chart-line"></i><span>Dashboard</span></div>
-          <div class="nav-button" type="button" onclick="mostrarOpcion('registros')"><i class="fas fa-table"></i><span>Registros</span></div>
-          <hr/>
-          <hr/>
-          <div class="nav-button" type="button" onclick="mostrarOpcion('usuarios')"><i class="fas fa-users"></i><span>Usuarios</span></div>
-          <div class="nav-button" type="button" onclick="confirmarCerrarSesion()"><i class="fas fa-door-closed"></i><span>Cerrar Sesión</span></div>
-          <div id="nav-content-highlight"></div>
-        </div>
-        <input id="nav-footer-toggle" type="checkbox"/>
-        <div id="nav-footer">
-          <div id="nav-footer-heading">
-            <div id="nav-footer-avatar"><img src="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png"/></div>
-            <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank">Powerby:Megaprint®</a><span id="nav-footer-subtitle">Admin</span></div>
-            <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
-          </div>
-          <div id="nav-footer-content">
-            <Lorem>El usuario tiene acceso a todas las funciones del portal web</Lorem>
-            <Lorem>Megaprint® 2024</Lorem>
-          </div>
-        </div>
+  <div id="nav-bar">
+    <input id="nav-toggle" type="checkbox" />
+    <div id="nav-header"><a id="nav-title" target="_blank"><img src="/img/Movistar New.svg" alt="Image"
+          class="megalogo"></i>MOVISTAR - COLOMBIA</a>
+      <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+      <hr />
     </div>
-      <div class="content-box-Large">
-        <h1>Registros</h1><br/>
-        <p>En el siguiente apartado encontrara los registros sobre el gestor de usuarios:<br/></p>
-        <div>
-          <button id="download-csv" class="descarga-buton">Download CSV</button>
-          <button id="download-xlsx" class="descarga-buton">Download XLSX</button>
-          <button id="download-pdf" class="descarga-buton">Download PDF</button>
+    <div id="nav-content">
+      <div class="nav-button" type="button" onclick="mostrarOpcion('inicio')"><i
+          class="fas fa-home"></i><span>Inicio</span></div>
+      <div class="nav-button" type="button" onclick="mostrarOpcion('dashboard')"><i
+          class="fas fa-chart-line"></i><span>Dashboard</span></div>
+      <div class="nav-button" type="button" onclick="mostrarOpcion('registros')"><i
+          class="fas fa-table"></i><span>Registros</span></div>
+      <hr />
+      <hr />
+      <div class="nav-button" type="button" onclick="mostrarOpcion('usuarios')"><i
+          class="fas fa-users"></i><span>Usuarios</span></div>
+      <div class="nav-button" type="button" onclick="confirmarCerrarSesion()"><i
+          class="fas fa-door-closed"></i><span>Cerrar Sesión</span></div>
+      <div id="nav-content-highlight"></div>
+    </div>
+    <input id="nav-footer-toggle" type="checkbox" />
+    <div id="nav-footer">
+      <div id="nav-footer-heading">
+        <div id="nav-footer-avatar"><img
+            src="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png" />
         </div>
-        <div id="tabla" class="data-tabla"></div> 
-      
-      
+        <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank">Powerby:Megaprint®</a><span
+            id="nav-footer-subtitle">Admin</span></div>
+        <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
       </div>
-      <script src="/Js/registros.js"></script>
-      <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
-      <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+      <div id="nav-footer-content">
+        <Lorem>El usuario tiene acceso a todas las funciones del portal web</Lorem>
+        <Lorem>Megaprint® 2024</Lorem>
+      </div>
+    </div>
+  </div>
+  <div class="content-box-Large">
+    <h1>Registros</h1><br />
+    <p>En el siguiente apartado encontrara los registros sobre el gestor de usuarios:<br /></p>
+    <div>
+      <button id="download-csv" class="descarga-buton">Download CSV</button>
+      <button id="download-xlsx" class="descarga-buton">Download XLSX</button>
+      <button id="download-pdf" class="descarga-buton">Download PDF</button>
+    </div>
+    <div id="tabla" class="data-tabla"></div>
+
+
+  </div>
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+  <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+  <script src="/registros.js"></script>
 </body>
+
 </html>
