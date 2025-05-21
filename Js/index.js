@@ -63,7 +63,7 @@ function mostrarOpcion(opcion) {
   }
   if (opcion === 'usuarios') {
     setTimeout(() => {
-      window.location.href = "/public/usuarios.html";
+      window.location.href = "/usuarios";
     }, 200);
   }
 }

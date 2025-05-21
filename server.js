@@ -48,6 +48,13 @@ app.get('/home', verificarAutenticacion, (req, res) => {
 });
 
 
+app.get('/usuarios', verificarAutenticacion, (req, res) => {
+  res.sendFile(__dirname + '/public/usuarios.html');
+});
+
+
+
+
 
 
 
