@@ -1,10 +1,9 @@
 $(document).ready(function() {
+  // Cargar usuarios en DataTable
   $.ajax({
     url: "http://localhost:3000/api/user",
     method: "GET",
-    xhrFields: {
-      withCredentials: true
-    },
+    xhrFields: { withCredentials: true },
     success: function(data) {
       $('#tablaUsuarios').DataTable({
         data: data,
@@ -28,7 +27,7 @@ $(document).ready(function() {
           {
             data: "estado",
             render: function(data) {
-              return data === 1 ? "Activo" : "Inactivo";
+              return data === 1 || data === true ? "Activo" : "Inactivo";
             }
           },
           {
@@ -37,15 +36,20 @@ $(document).ready(function() {
             searchable: false,
             render: function(data) {
               return `
-                <button class="btn btn-action" onclick="editarUsuario('${data._id}')">📝</button>
-                <button class="btn btn-action" onclick="eliminarUsuario('${data._id}')">❌</button>
+                <button class="btn-action" onclick="editarUsuario('${data._id}')">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-action" onclick="eliminarUsuario('${data._id}')">
+                  <i class="fas fa-trash"></i>
+                </button>
               `;
             }
           }
         ],
         language: {
-          url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-        }
+          url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+        },
+        destroy: true
       });
     },
     error: function(err) {
@@ -57,63 +61,111 @@ $(document).ready(function() {
       });
     }
   });
-});
 
 
-// Crear usuario
-$("#formCrearUsuario").on("submit", function(e) {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(this).entries());
+  $("#formCrearUsuario").on("submit", function(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(this).entries());
 
-  fetch("http://localhost:3000/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  })
-    .then(res => res.json())
-    .then(res => {
-      $('#modalCrearUsuario').modal('hide');
-      Swal.fire("¡Éxito!", "Usuario creado correctamente", "success");
-      $('#tablaUsuarios').DataTable().ajax.reload(); // si usas ajax
+    fetch("http://localhost:3000/api/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", // ✅ para enviar la cookie de sesión
+      body: JSON.stringify(data),
     })
-    .catch(err => {
-      console.error(err);
-      Swal.fire("Error", "No se pudo crear el usuario", "error");
-    });
-});
+      .then(async res => {
+        const result = await res.json();
 
-// Editar usuario
-window.editarUsuario = function(id) {
-  fetch(`http://localhost:3000/api/user/${id}`)
-    .then(res => res.json())
-    .then(user => {
-      const form = document.querySelector("#formEditarUsuario");
-      form._id.value = user._id;
-      form.Nombre.value = user.Nombre;
-      form.correo.value = user.correo;
-      form.id_rol.value = user.id_rol;
-      $('#modalEditarUsuario').modal('show');
-    });
-};
+        if (!res.ok) {
+          // ❌ Mostrar mensaje de error si la respuesta no es 200 o 201
+          console.error("Error al crear:", result.error);
+          Swal.fire("Error", result.mensaje || "No se pudo crear el usuario", "error");
+          return;
+        }
 
-$("#formEditarUsuario").on("submit", function(e) {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(this).entries());
-  const id = data._id;
+        // ✅ Solo si el código es 200 o 201
+        $('#modalCrearUsuario').modal('hide');
+        Swal.fire("¡Éxito!", "Usuario creado correctamente", "success");
+        $('#formCrearUsuario')[0].reset();
+        setTimeout(() => window.location.reload(), 1000);
+      })
+      .catch(err => {
+        console.error("Error de red o inesperado:", err);
+        Swal.fire("Error", "No se pudo conectar al servidor", "error");
+      });
+  });
 
-  fetch(`http://localhost:3000/api/user/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  })
-    .then(res => res.json())
-    .then(res => {
-      $('#modalEditarUsuario').modal('hide');
-      Swal.fire("Actualizado", "Usuario modificado correctamente", "success");
-      $('#tablaUsuarios').DataTable().ajax.reload(); // si usas ajax
+
+  // Editar usuario
+  window.editarUsuario = function(id) {
+    const table = $('#tablaUsuarios').DataTable();
+    const rowData = table.rows().data().toArray().find(user => user._id === id);
+
+    if (!rowData) {
+      console.error("Usuario no encontrado en tabla");
+      return;
+    }
+
+    document.querySelector("#formEditarUsuario [name='_id']").value = rowData._id;
+    document.querySelector("#formEditarUsuario [name='Nombre']").value = rowData.Nombre;
+    document.querySelector("#formEditarUsuario [name='correo']").value = rowData.correo;
+    document.querySelector("#formEditarUsuario [name='id_rol']").value = rowData.id_rol;
+
+    const modal = new bootstrap.Modal(document.getElementById("modalEditarUsuario"));
+    modal.show();
+  }
+
+  // Guardar cambios de edición
+  $("#formEditarUsuario").on("submit", function(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(this).entries());
+    const id = data._id;
+
+    fetch(`http://localhost:3000/api/user/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      credentials: "include",
     })
-    .catch(err => {
-      console.error(err);
-      Swal.fire("Error", "No se pudo actualizar el usuario", "error");
+      .then(res => res.json())
+      .then(res => {
+        $('#modalEditarUsuario').modal('hide');
+        Swal.fire("Actualizado", "Usuario modificado correctamente", "success");
+        $('#formEditarUsuario')[0].reset();
+        setTimeout(() => window.location.reload(), 1000);
+      })
+      .catch(err => {
+        console.error(err);
+        Swal.fire("Error", "No se pudo actualizar el usuario", "error");
+      });
+  });
+
+  // Eliminar usuario
+  window.eliminarUsuario = function(id) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/api/user/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then(res => res.json())
+          .then(res => {
+            Swal.fire("¡Eliminado!", "Usuario eliminado correctamente", "success");
+            setTimeout(() => window.location.reload(), 1000);
+          })
+          .catch(err => {
+            console.error(err);
+            Swal.fire("Error", "No se pudo eliminar el usuario", "error");
+          });
+      }
     });
+  }
 });
