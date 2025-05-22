@@ -96,6 +96,12 @@
     #nav-bar {
       z-index: 0;
     }
+
+    .form-group>label {
+      float: left;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
   </style>
 
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -240,41 +246,115 @@
         <div class="modal-content">
           <form id="formEditarCierre">
             <div class="modal-header">
-              <h5 class="modal-title">Crear Cierre UM</h5>
+              <h5 class="modal-title">Editar Cierre UM</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body row">
-              <div class="col-md-6">
-                <input type="hidden" name="_id" value="" />
-                <input type="text" name="proyecto" placeholder="Proyecto" class="form-control mb-2" />
-                <input type="text" name="cliente" placeholder="Cliente" class="form-control mb-2" required />
-                <input type="text" name="direccion" placeholder="Dirección" class="form-control mb-2" />
-                <input type="text" name="tipo_servicio" placeholder="Tipo de Servicio" class="form-control mb-2" />
-                <input type="text" name="medio" placeholder="Medio" class="form-control mb-2" />
-                <input type="text" name="ot" placeholder="OT" class="form-control mb-2" />
-                <input type="text" name="central_ur" placeholder="Central UR" class="form-control mb-2" />
-                <input type="text" name="rda" placeholder="RDA" class="form-control mb-2" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" name="supervisor_preliminar" placeholder="Supervisor Preliminar"
-                  class="form-control mb-2" />
-                <input type="text" name="pruebas_preliminar" placeholder="Pruebas Preliminar"
-                  class="form-control mb-2" />
-                <input type="text" name="supervisor" placeholder="Supervisor" class="form-control mb-2" />
-                <input type="text" name="pruebas" placeholder="Pruebas" class="form-control mb-2" />
-                <input type="text" name="despacho" placeholder="Despacho" class="form-control mb-2" />
-                <input type="datetime-local" name="fecha_asignacion" placeholder="Fecha Asignación"
-                  class="form-control mb-2" />
-                <input type="datetime-local" name="fecha_entrega" placeholder="Fecha Entrega"
-                  class="form-control mb-2" />
-                <input type="text" name="estado" placeholder="Estado" class="form-control mb-2" />
-                <input type="text" name="observaciones" placeholder="Observaciones" class="form-control mb-2" />
-                <input type="text" name="tecnico" placeholder="Técnico" class="form-control mb-2" />
-                <input type="text" name="odt" placeholder="ODT" class="form-control mb-2" />
-                <input type="text" name="protocolo" placeholder="Protocolo" class="form-control mb-2" />
-                <input type="text" name="cnoc" placeholder="CNOC" class="form-control mb-2" />
+
+            <div class="modal-body">
+              <input type="hidden" name="_id" />
+
+              <div class="row g-4">
+                <!-- Columna izquierda -->
+                <div class="col-md-6">
+                  <div class="form-group mb-2">
+                    <label for="proyecto">Proyecto</label>
+                    <input type="text" id="proyecto" name="proyecto" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="cliente">Cliente</label>
+                    <input type="text" id="cliente" name="cliente" class="form-control" required />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" name="direccion" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="tipo_servicio">Tipo de Servicio</label>
+                    <input type="text" id="tipo_servicio" name="tipo_servicio" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="medio">Medio</label>
+                    <input type="text" id="medio" name="medio" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="ot">OT</label>
+                    <input type="text" id="ot" name="ot" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="central_ur">Central UR</label>
+                    <input type="text" id="central_ur" name="central_ur" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="rda">RDA</label>
+                    <input type="text" id="rda" name="rda" class="form-control" />
+                  </div>
+                </div>
+
+                <!-- Columna derecha -->
+                <div class="col-md-6">
+                  <div class="form-group mb-2">
+                    <label for="supervisor_preliminar">Supervisor Preliminar</label>
+                    <input type="text" id="supervisor_preliminar" name="supervisor_preliminar" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="pruebas_preliminar">Pruebas Preliminar</label>
+                    <input type="text" id="pruebas_preliminar" name="pruebas_preliminar" class="form-control" />
+                  </div>
+
+                  <hr class="my-3">
+                  <div class="form-group mb-2">
+                    <label for="supervisor">Supervisor</label>
+                    <input type="text" id="supervisor" name="supervisor" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="pruebas">Pruebas</label>
+                    <input type="text" id="pruebas" name="pruebas" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="despacho">Despacho</label>
+                    <input type="text" id="despacho" name="despacho" class="form-control" />
+                  </div>
+
+                  <hr class="my-3">
+                  <h6 class="fw-bold">Fechas</h6>
+                  <div class="form-group mb-2">
+                    <label for="fecha_asignacion">Fecha Asignación</label>
+                    <input type="datetime-local" id="fecha_asignacion" name="fecha_asignacion" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="fecha_entrega">Fecha Entrega</label>
+                    <input type="datetime-local" id="fecha_entrega" name="fecha_entrega" class="form-control" />
+                  </div>
+
+                  <hr class="my-3">
+                  <div class="form-group mb-2">
+                    <label for="estado">Estado</label>
+                    <input type="text" id="estado" name="estado" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="observaciones">Observaciones</label>
+                    <input type="text" id="observaciones" name="observaciones" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="tecnico">Técnico</label>
+                    <input type="text" id="tecnico" name="tecnico" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="odt">ODT</label>
+                    <input type="text" id="odt" name="odt" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="protocolo">Protocolo</label>
+                    <input type="text" id="protocolo" name="protocolo" class="form-control" />
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="cnoc">CNOC</label>
+                    <input type="text" id="cnoc" name="cnoc" class="form-control" />
+                  </div>
+                </div>
               </div>
             </div>
+
             <div class="modal-footer">
               <button type="submit" class="btn btn-success">Guardar</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -282,9 +362,9 @@
           </form>
         </div>
       </div>
-
-
     </div>
+
+  </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
