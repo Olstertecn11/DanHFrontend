@@ -66,4 +66,10 @@ function mostrarOpcion(opcion) {
       window.location.href = "/usuarios";
     }, 200);
   }
+
+  if (opcion === 'cierre_um') {
+    setTimeout(() => {
+      window.location.href = "/cierre_um";
+    }, 200);
+  }
 }

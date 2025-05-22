@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movistar - Megaprint</title>
+
+  <!-- Íconos y tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Mooli&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Tabulator -->
+  <link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet" />
+
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="/styles/styleindex.css" />
+  <link rel="stylesheet" href="/styleinicio.css" />
+
+  <!-- Ícono -->
+  <link rel="icon"
+    href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png" />
+
+  <style>
+    .btn-action {
+      width: 40%;
+      background-color: #8080802e;
+      border: none;
+      border-radius: 5px;
+      padding: 2px 5px;
+      color: #18283b;
+      font-size: 12px;
+    }
+
+    .btn-action:hover {
+      background-color: #433e3e2e;
+      border: none;
+      border-radius: 5px;
+      padding: 2px 5px;
+      color: #18283b;
+      font-size: 12px;
+      animation: 0.3s;
+    }
+
+    .btn-add {
+      float: right;
+      margin-bottom: 2rem;
+      background: #18283b;
+      color: #c5e7ed;
+      font-weight: bold;
+      border: 1px solid #79d9e7;
+      font-size: 1vw;
+    }
+
+    .paginate_button,
+    .dataTables_info,
+    .dataTables_length,
+    .dataTables_filter {
+      font-size: 1vw;
+    }
+
+    .btn-add:hover {
+      background: #305178;
+    }
+
+    .modal-backdrop {
+      z-index: -1;
+    }
+
+    .modal {
+      backdrop-filter: blur(10px) brightness(0.5);
+    }
+
+    thead {
+      background: #18283b;
+      color: #c5f8ff;
+    }
+
+    #tablaCierreUM_wrapper {
+      overflow-x: auto;
+    }
+
+    #nav-bar {
+      z-index: 0;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+  <div id="nav-bar">
+    <input id="nav-toggle" type="checkbox" />
+    <div id="nav-header">
+      <a id="nav-title" target="_blank">
+        <img src="/img/Movistar New.svg" alt="Image" class="megalogo" />
+        MOVISTAR - COLOMBIA
+      </a>
+      <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+      <hr />
+    </div>
+    <div id="nav-content">
+      <div class="nav-button" onclick="mostrarOpcion('inicio')"><i class="fas fa-home"></i> Inicio</div>
+      <div class="nav-button" onclick="mostrarOpcion('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</div>
+      <div class="nav-button" onclick="mostrarOpcion('registros')"><i class="fas fa-table"></i> Registros</div>
+      <hr />
+      <div class="nav-button" onclick="mostrarOpcion('usuarios')"><i class="fas fa-users"></i> Usuarios</div>
+      <div class="nav-button" type="button" onclick="mostrarOpcion('cierre_um')"><i
+          class="fas fa-file-signature"></i><span>Cierre
+          Um</span></div>
+      <div class="nav-button" onclick="confirmarCerrarSesion()"><i class="fas fa-door-closed"></i> Cerrar Sesión</div>
+      <div id="nav-content-highlight"></div>
+    </div>
+    <input id="nav-footer-toggle" type="checkbox" />
+    <div id="nav-footer">
+      <div id="nav-footer-heading">
+        <div id="nav-footer-avatar">
+          <img
+            src="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png" />
+        </div>
+        <div id="nav-footer-titlebox">
+          <a id="nav-footer-title" href="#">Powerby: Megaprint®</a>
+          <span id="nav-footer-subtitle">Admin</span>
+        </div>
+        <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+      </div>
+      <div id="nav-footer-content">
+        <p>El usuario tiene acceso a todas las funciones del portal web</p>
+        <p>Megaprint® 2024</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box-Large container-fluid py-4">
+    <h1 class="mb-3 title">Cierre Um</h1>
+    <p>En el siguiente apartado puede seleccionar visualizar el registro de cierres:</p>
+
+    <button class="btn btn-success mb-3 btn-add" data-bs-toggle="modal" data-bs-target="#modalCrearCierre">
+      Agregar <i class="fas fa-plus"></i>
+    </button>
+
+
+    <table id="tablaCierreUM" class="display table table-bordered mt-4" style="width:100%; margin-top: 2rem;">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Proyecto</th>
+          <th>Cliente</th>
+          <th>Dirección</th>
+          <th>Tipo Servicio</th>
+          <th>Medio</th>
+          <th>OT</th>
+          <th>Central UR</th>
+          <th>RDA</th>
+          <th>Supervisor Preliminar</th>
+          <th>Pruebas Preliminar</th>
+          <th>Supervisor</th>
+          <th>Pruebas</th>
+          <th>Despacho</th>
+          <th>Fecha Asignación</th>
+          <th>Fecha Entrega</th>
+          <th>Estado</th>
+          <th>Observaciones</th>
+          <th>Técnico</th>
+          <th>ODT</th>
+          <th>Protocolo</th>
+          <th>CNOC</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+
+    <div class="modal fade" id="modalCrearCierre" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <form id="formCrearCierre">
+            <div class="modal-header">
+              <h5 class="modal-title">Crear Cierre UM</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body row">
+              <div class="col-md-6">
+                <input type="text" name="proyecto" placeholder="Proyecto" class="form-control mb-2" />
+                <input type="text" name="cliente" placeholder="Cliente" class="form-control mb-2" required />
+                <input type="text" name="direccion" placeholder="Dirección" class="form-control mb-2" />
+                <input type="text" name="tipo_servicio" placeholder="Tipo de Servicio" class="form-control mb-2" />
+                <input type="text" name="medio" placeholder="Medio" class="form-control mb-2" />
+                <input type="text" name="ot" placeholder="OT" class="form-control mb-2" />
+                <input type="text" name="central_ur" placeholder="Central UR" class="form-control mb-2" />
+                <input type="text" name="rda" placeholder="RDA" class="form-control mb-2" />
+              </div>
+              <div class="col-md-6">
+                <input type="text" name="supervisor_preliminar" placeholder="Supervisor Preliminar"
+                  class="form-control mb-2" />
+                <input type="text" name="pruebas_preliminar" placeholder="Pruebas Preliminar"
+                  class="form-control mb-2" />
+                <input type="text" name="supervisor" placeholder="Supervisor" class="form-control mb-2" />
+                <input type="text" name="pruebas" placeholder="Pruebas" class="form-control mb-2" />
+                <input type="text" name="despacho" placeholder="Despacho" class="form-control mb-2" />
+                <input type="datetime-local" name="fecha_asignacion" placeholder="Fecha Asignación"
+                  class="form-control mb-2" />
+                <input type="datetime-local" name="fecha_entrega" placeholder="Fecha Entrega"
+                  class="form-control mb-2" />
+                <input type="text" name="estado" placeholder="Estado" class="form-control mb-2" />
+                <input type="text" name="observaciones" placeholder="Observaciones" class="form-control mb-2" />
+                <input type="text" name="tecnico" placeholder="Técnico" class="form-control mb-2" />
+                <input type="text" name="odt" placeholder="ODT" class="form-control mb-2" />
+                <input type="text" name="protocolo" placeholder="Protocolo" class="form-control mb-2" />
+                <input type="text" name="cnoc" placeholder="CNOC" class="form-control mb-2" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Guardar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modalEditarCierre" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <form id="formEditarCierre">
+            <div class="modal-header">
+              <h5 class="modal-title">Crear Cierre UM</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body row">
+              <div class="col-md-6">
+                <input type="text" name="proyecto" placeholder="Proyecto" class="form-control mb-2" />
+                <input type="text" name="cliente" placeholder="Cliente" class="form-control mb-2" required />
+                <input type="text" name="direccion" placeholder="Dirección" class="form-control mb-2" />
+                <input type="text" name="tipo_servicio" placeholder="Tipo de Servicio" class="form-control mb-2" />
+                <input type="text" name="medio" placeholder="Medio" class="form-control mb-2" />
+                <input type="text" name="ot" placeholder="OT" class="form-control mb-2" />
+                <input type="text" name="central_ur" placeholder="Central UR" class="form-control mb-2" />
+                <input type="text" name="rda" placeholder="RDA" class="form-control mb-2" />
+              </div>
+              <div class="col-md-6">
+                <input type="text" name="supervisor_preliminar" placeholder="Supervisor Preliminar"
+                  class="form-control mb-2" />
+                <input type="text" name="pruebas_preliminar" placeholder="Pruebas Preliminar"
+                  class="form-control mb-2" />
+                <input type="text" name="supervisor" placeholder="Supervisor" class="form-control mb-2" />
+                <input type="text" name="pruebas" placeholder="Pruebas" class="form-control mb-2" />
+                <input type="text" name="despacho" placeholder="Despacho" class="form-control mb-2" />
+                <input type="datetime-local" name="fecha_asignacion" placeholder="Fecha Asignación"
+                  class="form-control mb-2" />
+                <input type="datetime-local" name="fecha_entrega" placeholder="Fecha Entrega"
+                  class="form-control mb-2" />
+                <input type="text" name="estado" placeholder="Estado" class="form-control mb-2" />
+                <input type="text" name="observaciones" placeholder="Observaciones" class="form-control mb-2" />
+                <input type="text" name="tecnico" placeholder="Técnico" class="form-control mb-2" />
+                <input type="text" name="odt" placeholder="ODT" class="form-control mb-2" />
+                <input type="text" name="protocolo" placeholder="Protocolo" class="form-control mb-2" />
+                <input type="text" name="cnoc" placeholder="CNOC" class="form-control mb-2" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Guardar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/cierre_um.js"></script>
+  <script src="/index.js"></script>
+</body>
+
+</html>

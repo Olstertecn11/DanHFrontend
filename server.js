@@ -53,6 +53,11 @@ app.get('/usuarios', verificarAutenticacion, (req, res) => {
 });
 
 
+app.get('/cierre_um', verificarAutenticacion, (req, res) => {
+  res.sendFile(__dirname + '/public/cierre_um.html');
+});
+
+
 
 
 
