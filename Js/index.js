@@ -1,4 +1,39 @@
 
+document.addEventListener("DOMContentLoaded", () => {
+  console.log('loading');
+  fetch("http://localhost:3000/api/auth/user-info", {
+    method: "POST",
+    credentials: "include", // Necesario si estás usando cookies para sesión
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}), // Aunque no necesitas enviar body en este caso
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.mensaje || "Error al obtener el usuario");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const user = data;
+      if (user.id_rol > 1) {
+        const i_classes = ['fa-table', 'fa-users']
+        i_classes.forEach((i_class) => {
+          const icon = document.querySelectorAll(`.${i_class}`);
+          const parent = icon[0].parentElement;
+          parent.parentElement.removeChild(parent);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error al obtener user-info:", error.message);
+    });
+});
+
+
+
 function confirmarCerrarSesion() {
   Swal.fire({
     title: '¿Está seguro de cerrar sesión?',
@@ -48,12 +83,12 @@ function confirmarCerrarSesion() {
 function mostrarOpcion(opcion) {
   if (opcion === 'dashboard') {
     setTimeout(() => {
-      window.location.href = "/views/index.ejs";
+      window.location.href = "/dashboard";
     }, 200);
   }
   if (opcion === 'inicio') {
     setTimeout(() => {
-      window.location.href = "/home";
+      window.location.href = "/inicio";
     }, 100);
   }
   if (opcion === 'registros') {

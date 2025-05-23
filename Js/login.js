@@ -1,5 +1,5 @@
 const formulario = document.querySelector("#formulario");
-// https://danhbackend.onrender.com
+// http://localhost:3000
 
 formulario.addEventListener("submit", async (e) => {
 
@@ -31,6 +31,7 @@ formulario.addEventListener("submit", async (e) => {
         contrasena: password
       }),
     });
+    console.log(response);
 
     const data = await response.json();
 

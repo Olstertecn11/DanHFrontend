@@ -43,7 +43,7 @@ app.get('/registros', verificarAutenticacion, (req, res) => {
 });
 
 
-app.get('/home', verificarAutenticacion, (req, res) => {
+app.get('/dashboard', verificarAutenticacion, (req, res) => {
   res.render('index');
 });
 

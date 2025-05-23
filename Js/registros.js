@@ -1,5 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log('Inicializando tabla de logs...');
+  // make a post request to  user-info
+  fetch("http://localhost:3000/api/auth/user-info", {
+    method: "POST",
+    credentials: "include", // Necesario si estás usando cookies para sesión
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}), // Aunque no necesitas enviar body en este caso
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.mensaje || "Error al obtener el usuario");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const user = data;
+      if (user.id_rol > 1) {
+        window.location.href = "/sin-permisos.html";
+      }
+    })
+    .catch((error) => {
+      console.error("Error al obtener user-info:", error.message);
+    });
+
 
   const table = new Tabulator("#tabla", {
     layout: "fitDataStretch",

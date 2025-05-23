@@ -44,12 +44,6 @@
       <div class="nav-button" type="button" onclick="mostrarOpcion('registros')"><i
           class="fas fa-table"></i><span>Registros</span></div>
       <hr />
-      <hr />
-      <div id="btn-usuarios" class="nav-button" type="button" onclick="mostrarOpcion('usuarios')"><i
-          class="fas fa-users"></i><span>Usuarios</span></div>
-      <div id="btn-cierre" class="nav-button" type="button" onclick="mostrarOpcion('cierre_um')"><i
-          class="fas fa-file-signature"></i><span>Cierre
-          Um</span></div>
       <div class="nav-button" type="button" onclick="confirmarCerrarSesion()"><i
           class="fas fa-door-closed"></i><span>Cerrar Sesión</span></div>
       <div id="nav-content-highlight"></div>
@@ -61,24 +55,19 @@
             src="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png" />
         </div>
         <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank">Powerby:Megaprint®</a><span
-            id="nav-footer-subtitle">Admin</span></div>
+            id="nav-footer-subtitle">Operador</span></div>
         <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
-      </div>
-      <div id="nav-footer-content">
-        <Lorem>El usuario tiene acceso a todas las funciones del portal web</Lorem>
-        <Lorem>Megaprint® 2024</Lorem>
       </div>
     </div>
   </div>
   <div class="content-box-Large">
-    <div id="dashboard-container">
-      <iframe
-        src="https://app.powerbi.com/view?r=eyJrIjoiOTM0MmVjOTEtZGNjNy00NzYyLTk3MWYtMjMwNTFkNzE2ZmE1IiwidCI6IjRiZmIzM2JmLTU0NTYtNDYyZS04NjI4LTJiYzY0ZjE2YTBiZCIsImMiOjR9"
-        frameborder="0" allowfullscreen="true"></iframe>
+    <div class="content-box-Large" id="dashboard-content">
+      <h1>Sin permisos</h1>
+      <p>Lo sentimos, no tienes permisos para acceder a esta sección.</p>
+      <a href="/inicio" class="btn btn-primary">Volver al inicio</a>
     </div>
   </div>
   <div class="content-box-Large" id="dashboard-content" style="display: none;"></div>
-  </div>
   <script src="index.js"></script>
 </body>
 
