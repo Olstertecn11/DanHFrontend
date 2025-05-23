@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   // make a post request to  user-info
-  fetch("http://localhost:3000/api/auth/user-info", {
+  fetch("http://24.199.111.122:3000/api/auth/user-info", {
     method: "POST",
     credentials: "include", // Necesario si estás usando cookies para sesión
     headers: {
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     layout: "fitDataStretch",
     pagination: "local",
     paginationSize: 10,
-    ajaxURL: "http://localhost:3000/api/logs", // ✅ Cambiamos al endpoint de logs
+    ajaxURL: "http://24.199.111.122:3000/api/logs", // ✅ Cambiamos al endpoint de logs
     ajaxConfig: {
       method: "GET",
       credentials: "include",

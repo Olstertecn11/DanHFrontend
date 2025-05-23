@@ -1,5 +1,5 @@
 const formulario = document.querySelector("#formulario");
-// http://localhost:3000
+// http://24.199.111.122:3000
 
 formulario.addEventListener("submit", async (e) => {
 
@@ -20,7 +20,7 @@ formulario.addEventListener("submit", async (e) => {
   }
 
   try {
-    const response = await fetch('http://localhost:3000/api/auth/login', {
+    const response = await fetch('http://24.199.111.122:3000/api/auth/login', {
       method: 'POST',
       credentials: 'include', // importante para recibir la cookie del backend
       headers: {
@@ -34,6 +34,7 @@ formulario.addEventListener("submit", async (e) => {
     console.log(response);
 
     const data = await response.json();
+    console.log(data);
 
     if (response.ok) {
       Swal.fire({
