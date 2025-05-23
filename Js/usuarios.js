@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Cargar usuarios en DataTable
   $.ajax({
-    url: "http://24.199.111.122:3000/api/user",
+    url: "http://localhost:3000/api/user",
     method: "GET",
     xhrFields: { withCredentials: true },
     success: function(data) {
@@ -67,7 +67,7 @@ $(document).ready(function() {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(this).entries());
 
-    fetch("http://24.199.111.122:3000/api/user", {
+    fetch("http://localhost:3000/api/user", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include", // ✅ para enviar la cookie de sesión
@@ -121,7 +121,7 @@ $(document).ready(function() {
     const data = Object.fromEntries(new FormData(this).entries());
     const id = data._id;
 
-    fetch(`http://24.199.111.122:3000/api/user/${id}`, {
+    fetch(`http://localhost:3000/api/user/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -152,7 +152,7 @@ $(document).ready(function() {
       confirmButtonText: 'Sí, eliminarlo!'
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://24.199.111.122:3000/api/user/${id}`, {
+        fetch(`http://localhost:3000/api/user/${id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         })

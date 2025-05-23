@@ -18,7 +18,7 @@ function validarInicioSesion(event) {
 // Función para iniciar sesión
 async function loginUser(correo, password) {
     try {
-        const response = await fetch('http://24.199.111.122:3000/api/login', {
+        const response = await fetch('http://localhost:3000/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ correo, password })
@@ -46,7 +46,7 @@ async function loginUser(correo, password) {
 // Función para configurar 2FA (obtener el código QR)
 async function loadSetup2FA() {
     try {
-        const response = await fetch('http://24.199.111.122:3000/api/setup-2fa', {
+        const response = await fetch('http://localhost:3000/api/setup-2fa', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -66,7 +66,7 @@ async function loadSetup2FA() {
 // Función para verificar el token de 2FA en la configuración
 async function verifySetup2FA(token) {
     try {
-        const response = await fetch('http://24.199.111.122:3000/api/setup-2fa', {
+        const response = await fetch('http://localhost:3000/api/setup-2fa', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token })
@@ -91,7 +91,7 @@ async function verifyLogin2FA(token) {
     const correo = document.querySelector("#correo").value; // Obtener el correo del formulario
 
     try {
-        const response = await fetch('http://24.199.111.122:3000/api/verify-2fa', {
+        const response = await fetch('http://localhost:3000/api/verify-2fa', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ correo, token }),

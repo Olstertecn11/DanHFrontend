@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $.ajax({
-    url: "http://24.199.111.122:3000/api/cierre_um",
+    url: "http://localhost:3000/api/cierre_um",
     method: "GET",
     xhrFields: { withCredentials: true },
     success: function(data) {
@@ -75,7 +75,7 @@ $(document).ready(function() {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(this).entries());
 
-    fetch("http://24.199.111.122:3000/api/cierre_um", {
+    fetch("http://localhost:3000/api/cierre_um", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -106,7 +106,7 @@ $(document).ready(function() {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(this).entries());
 
-    fetch(`http://24.199.111.122:3000/api/cierre_um/${data._id}`, {
+    fetch(`http://localhost:3000/api/cierre_um/${data._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -193,7 +193,7 @@ $(document).ready(function() {
       confirmButtonText: 'Sí, eliminarlo!'
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://24.199.111.122:3000/api/cierre_um/${id}`, {
+        fetch(`http://localhost:3000/api/cierre_um/${id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
           credentials: "include"

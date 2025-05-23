@@ -1,66 +1,101 @@
 const formulario = document.querySelector("#formulario");
-// http://24.199.111.122:3000
 
 formulario.addEventListener("submit", async (e) => {
-
-
-  e.preventDefault(); // Prevenir el comportamiento por defecto del form
+  e.preventDefault();
 
   const username = document.querySelector("#user").value.trim();
   const password = document.querySelector("#pass").value.trim();
+  const otpField = document.querySelector("#otp");
 
   if (!username || !password) {
     return Swal.fire({
       icon: 'warning',
       title: 'Campos vacíos',
-      text: 'Usuario y/o contraseña vacíos, por favor llenar los campos correspondientes',
+      text: 'Usuario y/o contraseña vacíos',
       timer: 2000,
       showConfirmButton: false
     });
   }
 
   try {
-    const response = await fetch('http://24.199.111.122:3000/api/auth/login', {
+    const response = await fetch('http://localhost:3000/api/auth/login', {
       method: 'POST',
-      credentials: 'include', // importante para recibir la cookie del backend
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        correo: username,
-        contrasena: password
-      }),
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ correo: username, contrasena: password }),
     });
-    console.log(response);
 
     const data = await response.json();
-    console.log(data);
+
+    if (data.twoFactor) {
+      // ✅ Mostrar campo OTP y esperar confirmación
+      Swal.fire({
+        icon: 'info',
+        title: 'Código 2FA requerido',
+        text: 'Ingresa el código de Google Authenticator',
+      });
+
+      otpField.style.display = "block";
+      otpField.focus();
+
+      // Guardar temporalmente el ID
+      sessionStorage.setItem("pending2FAUserId", data.usuario.id);
+      return;
+    }
 
     if (response.ok) {
       Swal.fire({
         icon: 'success',
         title: 'Bienvenido',
-        text: 'Credenciales Correctas',
         timer: 1500,
         showConfirmButton: false
       });
-
       setTimeout(() => {
         window.location.href = "/inicio";
       }, 1500);
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al iniciar sesión',
-        text: data.mensaje || 'Por favor, verifica tus credenciales'
-      });
+      throw new Error(data.mensaje || 'Credenciales inválidas');
     }
+
   } catch (error) {
-    console.error('Error en la solicitud:', error);
+    console.error('Error en login:', error);
     Swal.fire({
       icon: 'error',
-      title: 'Error de conexión',
-      text: 'No se pudo conectar al servidor. Intenta de nuevo más tarde.'
+      title: 'Error',
+      text: error.message
     });
+  }
+});
+
+// ✅ Si el campo OTP es visible y se rellena, enviar el código
+document.querySelector("#otp").addEventListener("keypress", async function(e) {
+  if (e.key === "Enter") {
+    const code = this.value.trim();
+    const userId = sessionStorage.getItem("pending2FAUserId");
+
+    if (!code || !userId) return;
+
+    try {
+      const response = await fetch("http://localhost:3000/api/2fa/verificar", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ codigo: code, id: userId })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Swal.fire("2FA Verificado", "Inicio de sesión exitoso", "success");
+        setTimeout(() => {
+          window.location.href = "/inicio";
+        }, 1500);
+      } else {
+        Swal.fire("Error", data.mensaje || "Código incorrecto", "error");
+      }
+    } catch (err) {
+      console.error("Error al verificar 2FA:", err);
+      Swal.fire("Error", "Error de red al verificar 2FA", "error");
+    }
   }
 });
