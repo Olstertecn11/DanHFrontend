@@ -1,6 +1,12 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log('loading');
+  const navToggle = document.querySelector("#nav-toggle");
+
+  if (window.innerWidth < 768 && navToggle) {
+    navToggle.checked = true; // Colapsar menú en móviles
+  }
+
+
   fetch("http://localhost:3000/api/auth/user-info", {
     method: "POST",
     credentials: "include", // Necesario si estás usando cookies para sesión
