@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     try {
       // Verificar si el token existe
-      const response = await fetch(`http://localhost:3000/api/2fa_token/codigo/${token}`, {
+      const response = await fetch(`http://24.199.111.122:3000/api/2fa_token/codigo/${token}`, {
         method: "GET",
         credentials: "include",
       });
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       if (diferenciaSegundos > 180) {
-        await fetch(`http://localhost:3000/api/2fa_token/codigo/${token}`, {
+        await fetch(`http://24.199.111.122:3000/api/2fa_token/codigo/${token}`, {
           method: "DELETE",
           credentials: "include",
         });
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       // Eliminar token porque fue usado correctamente
-      await fetch(`http://localhost:3000/api/2fa_token/codigo/${token}`, {
+      await fetch(`http://24.199.111.122:3000/api/2fa_token/codigo/${token}`, {
         method: "DELETE",
         credentials: "include",
       });

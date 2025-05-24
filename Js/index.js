@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  fetch("http://localhost:3000/api/auth/user-info", {
+  fetch("http://24.199.111.122:3000/api/auth/user-info", {
     method: "POST",
     credentials: "include", // Necesario si estás usando cookies para sesión
     headers: {
@@ -50,7 +50,7 @@ function confirmarCerrarSesion() {
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {
-        const response = await fetch('http://localhost:3000/api/auth/logout', {
+        const response = await fetch('http://24.199.111.122:3000/api/auth/logout', {
           method: 'POST',
           credentials: 'include' // Necesario para enviar la cookie
         });

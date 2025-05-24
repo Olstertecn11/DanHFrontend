@@ -18,7 +18,7 @@ formulario.addEventListener("submit", async (e) => {
   }
 
   try {
-    const response = await fetch('http://localhost:3000/api/auth/login', {
+    const response = await fetch('http://24.199.111.122:3000/api/auth/login', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -42,7 +42,7 @@ formulario.addEventListener("submit", async (e) => {
       sessionStorage.setItem("pending2FAUserId", userId);
 
       try {
-        const response2 = await fetch("http://localhost:3000/api/2fa_token/crear", {
+        const response2 = await fetch("http://24.199.111.122:3000/api/2fa_token/crear", {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
@@ -113,7 +113,7 @@ document.querySelector("#otp").addEventListener("keypress", async function(e) {
     if (!code || !userId) return;
 
     try {
-      const response = await fetch("http://localhost:3000/api/2fa/verificar", {
+      const response = await fetch("http://24.199.111.122:3000/api/2fa/verificar", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
