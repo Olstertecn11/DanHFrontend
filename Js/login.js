@@ -26,6 +26,16 @@ formulario.addEventListener("submit", async (e) => {
     });
 
     const data = await response.json();
+    if (!response.ok) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de autenticación',
+        text: data.mensaje || 'Credenciales inválidas',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      return;
+    }
     if (data.usuario.twoFactorEnable) {
       console.log(data.usuario);
       const userId = data.usuario._id;
