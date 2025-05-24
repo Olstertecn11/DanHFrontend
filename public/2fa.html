@@ -4,36 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración de Autenticación de Dos Factores</title>
-    <script src="/Js/password.js" defer></script>
+    <script src="Js/password.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="/public/styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/styleindex.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Mooli&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Kantumruy+Pro:wght@600&family=Mooli&display=swap" rel="stylesheet">
     <link rel="icon" href="https://del-cloudinary.s3.us-east-1.amazonaws.com/del/megaprint-icono-243x236-copia-99x96 (1).png">
+
+    <style>
+    .btn-confirm{
+      background: linear-gradient(to right, #ffffff, #00ff00);
+      border: 1px solid green;
+      padding: 10px 20px;
+      font-weight: bold;
+      color: green;
+      border-radius: 5px;
+    }
+    .btn-confirm:hover {
+      background: linear-gradient(to right, #00ff00, #ffffff);
+    }
+
+    #countdown{
+      color: green;
+      font-weight: bold;
+    }
+    </style>
 </head>
 <body>
         <div class="top-text">Visual IVR Movistar Colombia</div>
             <div class="movistar">
-            <img src="/public/img/SVGmix-4MWkjz-movistar.svg" alt="Image" class="svg">
+            <img src="/img/SVGmix-4MWkjz-movistar.svg" alt="Image" class="svg">
         </div>
         <div class="login-container">
             <h2>Configuración de Autenticación de Dos Factores</h2>
             <p>Por favor, ingresa el código de autenticación de 2FA generado para completar el inicio de sesión.</p>
-            <form id="formulario-2fa" onsubmit="event.preventDefault(); verifyLogin2FA(document.getElementById('token').value);">
+            <form id="formulario-2fa">
                 <label for="token">Código de Autenticación:</label>
-                <input type="text" id="token" name="token" required placeholder="Ingresa el código de 2FA">
-                <button type="submit">Verificar 2FA</button>
+                <input type="text" id="token" name="token" class="mx-auto" required placeholder="Código de 2FA">
+                <button type="submit" class="btn-confirm">Verificar 2FA</button>
             </form>
         </div>
         <div class="login-left">
             <p>Para mejorar la seguridad de su cuenta, configure la autenticación de dos factores (2FA).</p>
+            <!-- Print counter with 3 minutes for inser the code -->
+            <div class="print-counter">
+                <p>Tiempo restante para ingresar el código: <span id="countdown">03:00</span></p>
+            </div>
         </div>
     <footer class="footer">
         <p>Megaprint® 2024 Version 0.0.1</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/authlogins.js"></script>
 </body>
 </html>

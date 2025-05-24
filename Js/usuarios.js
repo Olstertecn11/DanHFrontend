@@ -31,6 +31,14 @@ $(document).ready(function() {
             }
           },
           {
+            data: "twoFactorEnable",
+            render: function(data) {
+              return data ? "Sí" : "No";
+            },
+            title: "2FA"
+          },
+
+          {
             data: null,
             orderable: false,
             searchable: false,
@@ -87,7 +95,7 @@ $(document).ready(function() {
         $('#modalCrearUsuario').modal('hide');
         Swal.fire("¡Éxito!", "Usuario creado correctamente", "success");
         $('#formCrearUsuario')[0].reset();
-        setTimeout(() => window.location.reload(), 1000);
+        setTimeout(() => { window.location.reload() }, 1000);
       })
       .catch(err => {
         console.error("Error de red o inesperado:", err);
@@ -110,15 +118,22 @@ $(document).ready(function() {
     document.querySelector("#formEditarUsuario [name='Nombre']").value = rowData.Nombre;
     document.querySelector("#formEditarUsuario [name='correo']").value = rowData.correo;
     document.querySelector("#formEditarUsuario [name='id_rol']").value = rowData.id_rol;
+    document.querySelector("#formEditarUsuario [name='twoFactorEnable']").checked = !!rowData.twoFactorEnable;
+
 
     const modal = new bootstrap.Modal(document.getElementById("modalEditarUsuario"));
     modal.show();
   }
 
-  // Guardar cambios de edición
   $("#formEditarUsuario").on("submit", function(e) {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(this).entries());
+
+    const form = new FormData(this);
+    const data = Object.fromEntries(form.entries());
+
+    // ✅ Convertir valor del checkbox a booleano
+    data.twoFactorEnable = form.get("twoFactorEnable") === "on";
+
     const id = data._id;
 
     fetch(`http://localhost:3000/api/user/${id}`, {
@@ -132,6 +147,7 @@ $(document).ready(function() {
         $('#modalEditarUsuario').modal('hide');
         Swal.fire("Actualizado", "Usuario modificado correctamente", "success");
         $('#formEditarUsuario')[0].reset();
+        console.log(res);
         setTimeout(() => window.location.reload(), 1000);
       })
       .catch(err => {

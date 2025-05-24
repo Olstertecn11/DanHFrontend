@@ -26,22 +26,59 @@ formulario.addEventListener("submit", async (e) => {
     });
 
     const data = await response.json();
+    if (data.usuario.twoFactorEnable) {
+      console.log(data.usuario);
+      const userId = data.usuario._id;
 
-    if (data.twoFactor) {
-      // ✅ Mostrar campo OTP y esperar confirmación
-      Swal.fire({
-        icon: 'info',
-        title: 'Código 2FA requerido',
-        text: 'Ingresa el código de Google Authenticator',
-      });
+      if (!userId) {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'ID de usuario no disponible para 2FA'
+        });
+      }
 
-      otpField.style.display = "block";
-      otpField.focus();
+      // Guardar ID temporal en sessionStorage
+      sessionStorage.setItem("pending2FAUserId", userId);
 
-      // Guardar temporalmente el ID
-      sessionStorage.setItem("pending2FAUserId", data.usuario.id);
-      return;
+      try {
+        const response2 = await fetch("http://localhost:3000/api/2fa_token/crear", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId })
+        });
+
+        const result = await response2.json();
+
+        if (response2.ok) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Verificación de 2FA',
+            text: 'Se ha enviado un código a tu correo electrónico.',
+            timer: 2000,
+            showConfirmButton: false
+          });
+
+          setTimeout(() => {
+            window.location.href = "/2fa";
+          }, 2000);
+        } else {
+          throw new Error(result.mensaje || "Error al enviar el token 2FA");
+        }
+
+      } catch (error) {
+        console.error("Error 2FA:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error 2FA',
+          text: error.message
+        });
+      }
+
+      return; // Detener el flujo del login principal (esperando verificación)
     }
+
 
     if (response.ok) {
       Swal.fire({

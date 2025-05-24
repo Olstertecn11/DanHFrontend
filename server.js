@@ -57,6 +57,10 @@ app.get('/cierre_um', verificarAutenticacion, (req, res) => {
   res.sendFile(__dirname + '/public/cierre_um.html');
 });
 
+app.get('/2fa', (req, res) => {
+  res.sendFile(__dirname + '/public/2fa.html');
+});
+
 
 
 

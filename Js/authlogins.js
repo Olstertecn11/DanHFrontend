@@ -1,113 +1,76 @@
-// Selección del formulario y escucha del evento submit
-const formulario = document.querySelector("#formulario");
+document.addEventListener("DOMContentLoaded", function() {
+  const counter = document.getElementById("countdown");
 
-formulario.addEventListener("submit", validarInicioSesion);
+  const [initialMinutes, initialSeconds] = counter.innerText.split(":").map(Number);
+  let totalSeconds = initialMinutes * 60 + initialSeconds;
 
-// Función que se ejecuta al enviar el formulario
-function validarInicioSesion(event) {
-    event.preventDefault(); // Previene el recargo de la página
-
-    // Obtener los valores de los campos del formulario
-    const correo = document.querySelector("#correo").value;
-    const password = document.querySelector("#password").value;
-
-    // Llamar a la función de inicio de sesión con los datos del usuario
-    loginUser(correo, password);
-}
-
-// Función para iniciar sesión
-async function loginUser(correo, password) {
-    try {
-        const response = await fetch('http://localhost:3000/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ correo, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-            if (data.twoFactorEnabled) {
-                // Si 2FA está habilitado, redirige a la página de verificación de 2FA
-                window.location.href = "/public/2fa.html";
-            } else {
-                // Si 2FA no está habilitado, redirige a la página de configuración de 2FA
-                window.location.href = "/public/setup-2fa.html";
-            }
-        } else {
-            alert(data.message || 'Credenciales incorrectas. Intenta de nuevo.');
-        }
-    } catch (error) {
-        console.error('Error en la solicitud de login:', error);
-        alert('Error de conexión. Inténtalo más tarde.');
+  const interval = setInterval(() => {
+    if (totalSeconds <= 0) {
+      clearInterval(interval);
+      window.location.href = "/";
+      return;
     }
-}
 
-// Función para configurar 2FA (obtener el código QR)
-async function loadSetup2FA() {
-    try {
-        const response = await fetch('http://localhost:3000/api/setup-2fa', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        });
+    totalSeconds--;
 
-        if (response.ok) {
-            const data = await response.json();
-            document.getElementById('qrCodeImage').src = data.qrCodeURL;
-        } else {
-            alert('Error al cargar el código QR.');
-        }
-    } catch (error) {
-        console.error('Error en la solicitud de configuración de 2FA:', error);
-        alert('Error de conexión. Inténtalo más tarde.');
+    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+    const seconds = String(totalSeconds % 60).padStart(2, "0");
+    counter.innerText = `${minutes}:${seconds}`;
+  }, 1000);
+
+  document.getElementById("formulario-2fa").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const token = document.getElementById("token").value.trim().toUpperCase();
+
+    if (!token) {
+      return Swal.fire("Error", "Debes ingresar el código de verificación", "warning");
     }
-}
-
-// Función para verificar el token de 2FA en la configuración
-async function verifySetup2FA(token) {
-    try {
-        const response = await fetch('http://localhost:3000/api/setup-2fa', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-            alert('2FA habilitado exitosamente.');
-            window.location.href = "/public/home.html"; // Redirigir al home después de habilitar 2FA
-        } else {
-            alert(data.message || 'Código de 2FA inválido. Intenta de nuevo.');
-        }
-    } catch (error) {
-        console.error('Error en la solicitud de verificación de 2FA:', error);
-        alert('Error de conexión. Inténtalo más tarde.');
-    }
-}
-
-// Función para verificar el token de 2FA durante el inicio de sesión
-async function verifyLogin2FA(token) {
-    const correo = document.querySelector("#correo").value; // Obtener el correo del formulario
 
     try {
-        const response = await fetch('http://localhost:3000/api/verify-2fa', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ correo, token }),
-            credentials: 'include'
+      // Verificar si el token existe
+      const response = await fetch(`http://localhost:3000/api/2fa_token/codigo/${token}`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (!response.ok || !data || !data.creado_en) {
+        return Swal.fire("Error", data.mensaje || "Código inválido", "error");
+      }
+
+      const creadoEn = new Date(data.creado_en);
+      const ahora = new Date();
+      const diferenciaSegundos = (ahora - creadoEn) / 1000;
+
+      if (diferenciaSegundos < 0) {
+        console.warn("¡Advertencia! La fecha de creación del token es mayor que la actual.");
+      }
+
+      if (diferenciaSegundos > 180) {
+        await fetch(`http://localhost:3000/api/2fa_token/codigo/${token}`, {
+          method: "DELETE",
+          credentials: "include",
         });
 
-        const data = await response.json();
+        return Swal.fire("Expirado", "El código ha expirado, vuelve a iniciar sesión", "info")
+          .then(() => window.location.href = "/");
+      }
 
-        if (response.ok && data.success) {
-            alert('Inicio de sesión con 2FA exitoso.');
-            window.location.href = "/public/home.html"; // Redirigir al home después de verificar 2FA
-        } else {
-            alert(data.message || 'Código de 2FA inválido. Intenta de nuevo.');
-        }
+      // Eliminar token porque fue usado correctamente
+      await fetch(`http://localhost:3000/api/2fa_token/codigo/${token}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      Swal.fire("Éxito", "Código verificado correctamente", "success")
+        .then(() => window.location.href = "/inicio");
+
     } catch (error) {
-        console.error('Error en la solicitud de verificación de 2FA:', error);
-        alert('Error de conexión. Inténtalo más tarde.');
+      console.error("Error al verificar token:", error);
+      Swal.fire("Error", "No se pudo verificar el código", "error");
     }
-}
+  });
+});
