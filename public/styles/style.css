@@ -113,13 +113,13 @@
 @media (min-width: 375px) {
 
 
-  .login-container {
-    position: absolute;
-    left: -50%;
-    margin-left: 1rem;
-    width: 90%;
-    margin-right: 1rem !important;
-  }
+  /* .login-container { */
+  /*   position: absolute; */
+  /*   left: -50%; */
+  /*   margin-left: 1rem; */
+  /*   width: 90%; */
+  /*   margin-right: 1rem !important; */
+  /* } */
 
   .top-text {
     font-size: 20px;
