@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const table = new Tabulator("#tabla", {
     layout: "fitDataStretch",
     pagination: "local",
-    paginationSize: 20,
+    paginationSize: 10,
     ajaxURL: "http://24.199.111.122:3000/api/logs", // ✅ Cambiamos al endpoint de logs
     ajaxConfig: {
       method: "GET",
